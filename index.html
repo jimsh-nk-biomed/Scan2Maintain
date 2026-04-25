@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scan2Maintain</title>
+<title>Asset Scan2Maintain</title>
 
 <style>
 body {
@@ -72,6 +72,24 @@ legend {
   font-size:15px;
   cursor:pointer;
 }
+
+/* SMALL BUTTONS */
+.btn-row{
+  display:flex;
+  gap:5px;
+  margin-top:8px;
+}
+
+.small-btn{
+  flex:1;
+  padding:8px;
+  border:none;
+  border-radius:6px;
+  background:#28a745;
+  color:white;
+  font-size:13px;
+  cursor:pointer;
+}
 </style>
 </head>
 
@@ -81,7 +99,7 @@ legend {
   <img src="logo.jpg" alt="Company Logo">
 </div>
 
-<h2>Scan2Maintain</h2>
+<h2>Asset Scan2Maintain</h2>
 
 <div id="reader"></div>
 <div id="assetCard" class="card" style="display:none;"></div>
@@ -90,7 +108,7 @@ legend {
 
 <script>
 const SHEET_URL =
-"https://opensheet.elk.sh/1-qzKOkTdZUkZENHF2ggcnHLQXKh6zk9xTIK1xuSX0L4/Asset";
+"https://opensheet.elk.sh/1SjnaZ-OLmpZ95qr-yoMWvVGd52GCY0ziRaMqjkVq0ZY/Asset";
 
 const assetCard = document.getElementById("assetCard");
 
@@ -115,9 +133,9 @@ function getStatus(doneDateStr, validityDays) {
 
   const diffDays = Math.floor((expiry - today) / (1000 * 60 * 60 * 24));
 
-  if (diffDays < 0) return "red";        // Expired
-  if (diffDays <= 20) return "amber";    // Near expiry
-  return "green";                        // Valid
+  if (diffDays < 0) return "red";
+  if (diffDays <= 20) return "amber";
+  return "green";
 }
 
 function openPDF(url) {
@@ -151,10 +169,17 @@ function showAsset(a) {
     </fieldset>
 
     <hr>
+
     <button class="btn" onclick="openPDF('${a.Installation_PDF}')">Installation Report</button>
+
+    <div class="btn-row">
+      <button class="small-btn" onclick="openPDF('${a.IQ_PDF}')">IQ</button>
+      <button class="small-btn" onclick="openPDF('${a.OQ_PDF}')">OQ</button>
+      <button class="small-btn" onclick="openPDF('${a.PQ_PDF}')">PQ</button>
+    </div>
+
     <button class="btn" onclick="openPDF('${a.PMS_PDF}')">PMS Report</button>
     <button class="btn" onclick="openPDF('${a.Calibration_PDF}')">Calibration Report</button>
-    <button class="btn" onclick="openPDF('${a.Breakdown_PDF}')">Breakdown Report</button>
   `;
   assetCard.style.display = "block";
 }
